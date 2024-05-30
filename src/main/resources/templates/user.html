@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <link th:href="@{styles/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Имя</td>
+        <td>Пароль</td>
+        <td>Роль</td>
+    </tr>
+    <tr>
+        <td th:text="${#authentication.principal.getUsername()}">name</td>
+        <td th:text="${#authentication.principal.getPassword()}">password</td>
+        <td th:text="${#authentication.principal.getAuthorities()}">role</td>
+    </tr>
+</table>
+<div>
+    <a href="/logout">Выйти</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <link th:href="@{styles/style.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div>
+    <a href="/logout">Выйти</a>
+</div>
+<div>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Имя</td>
+            <td>Пароль</td>
+            <td>Роль</td>
+            <td>Блокировка</td>
+            <td>Действия</td>
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.getId()}">id</td>
+                <td th:text="${user.getUsername()}">name</td>
+                <td th:text="${user.getPassword()}">pass</td>
+                <td th:text="${user.getRoles()}">role</td>
+                <td th:text="${user.isAccountNonLocked() ? '' : 'Заблокирован'}">блок?</td>
+                <td>
+                    <span th:if="${user.isAccountNonLocked()}">
+                        <a th:href="@{admin/block?id={id}(id=${user.getId()})}">Заблокировать</a>
+                    </span>
+                    <span th:unless="${user.isAccountNonLocked()}">
+                        <a th:href="@{admin/unlock?id={id}(id=${user.getId()})}">Разблокировать</a>
+                    </span>
+                    <span>
+                        <a th:href="@{admin/delete?id={id}(id=${user.getId()})}">Удалить</a>
+                    </span>
+                </td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+</body>
+</html>
