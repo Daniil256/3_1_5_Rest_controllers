@@ -3,8 +3,6 @@ package com.example.demo.models;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -14,9 +12,6 @@ public class Role implements GrantedAuthority {
     private Long id;
 
     private String name;
-//    @Transient
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<MyUser> users;
 
     public Role(Long id, String name) {
         this.id = id;

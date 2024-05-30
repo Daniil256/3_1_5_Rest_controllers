@@ -1,5 +1,6 @@
 package com.example.demo.conrtoller;
 
+import com.example.demo.models.MyUser;
 import com.example.demo.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,15 +29,19 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/block")
-    public String blockUser(@RequestParam Long id) {
-        userService.blockUser(id);
-        return "redirect:/admin";
+    @GetMapping("/edit")
+    public String edit(@RequestParam("id") long id, Model model) {
+        MyUser user = userService.findUserById(id);
+        user.setPassword("");
+        model.addAttribute("user", user);
+        System.out.println(user);
+        return "editor";
     }
 
-    @GetMapping("/unlock")
-    public String unlockUser(@RequestParam Long id) {
-        userService.unlockUser(id);
+    @PostMapping("/edit")
+    public String update(MyUser user) {
+        System.out.println(user);
+        userService.updateUser(user);
         return "redirect:/admin";
     }
 }

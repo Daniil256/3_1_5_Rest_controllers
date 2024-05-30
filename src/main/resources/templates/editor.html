@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor</title>
+</head>
+<body>
+<div>
+    <a href="/logout">Выйти</a>
+</div>
+<form method="post" action="#" th:action="@{/admin/edit}" th:object="${user}">
+<!--         <span th:if="${user.isAccountNonLocked()}">-->
+<!--                        <a th:href="@{admin/block?id={id}(id=${user.getId()})}">Заблокировать</a>-->
+<!--                    </span>-->
+<!--    <span th:unless="${user.isAccountNonLocked()}">-->
+<!--                        <a th:href="@{admin/unlock?id={id}(id=${user.getId()})}">Разблокировать</a>-->
+<!--                    </span>-->
+
+
+    <input hidden="hidden" th:field="*{id}">
+    <label>
+        <input type="text" placeholder="Имя" th:field="*{username}">
+    </label>
+    <label>
+        <input type="text" placeholder="Пароль" th:field="*{password}">
+    </label>
+    <label>
+        <input type="checkbox"  th:field="*{locked}">
+        <span>Заблокирован</span>
+    </label>
+    <label>
+<!--        <input type="radio"  th:checked="${*{roles} == 'USER_ROLE' ? true : false}">-->
+        <span>Роль</span>
+    </label>
+    <input type="submit" value="Обновить"/>
+</form>
+</body>
+</html>

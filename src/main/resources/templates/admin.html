@@ -28,15 +28,8 @@
                 <td th:text="${user.getRoles()}">role</td>
                 <td th:text="${user.isAccountNonLocked() ? '' : 'Заблокирован'}">блок?</td>
                 <td>
-                    <span th:if="${user.isAccountNonLocked()}">
-                        <a th:href="@{admin/block?id={id}(id=${user.getId()})}">Заблокировать</a>
-                    </span>
-                    <span th:unless="${user.isAccountNonLocked()}">
-                        <a th:href="@{admin/unlock?id={id}(id=${user.getId()})}">Разблокировать</a>
-                    </span>
-                    <span>
+                        <a th:href="@{admin/edit?id={id}(id=${user.getId()})}">Редактировать</a>
                         <a th:href="@{admin/delete?id={id}(id=${user.getId()})}">Удалить</a>
-                    </span>
                 </td>
             </tr>
         </th:block>

@@ -17,10 +17,18 @@ public class MyUser implements UserDetails {
 
     private String username;
     private String password;
-    private boolean isNonLocked = true;
+    private boolean locked;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    public boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -32,7 +40,7 @@ public class MyUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return isNonLocked;
+        return !locked;
     }
 
     public void setUsername(String username) {
@@ -54,14 +62,6 @@ public class MyUser implements UserDetails {
 
     public boolean isEnabled() {
         return true;
-    }
-
-    public boolean isNonLocked() {
-        return isNonLocked;
-    }
-
-    public void setNoNLocked(boolean locked) {
-        isNonLocked = locked;
     }
 
     public Set<Role> getRoles() {
@@ -92,7 +92,7 @@ public class MyUser implements UserDetails {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", isNonLocked=" + isNonLocked +
+                ", locked=" + locked +
                 ", roles=" + roles +
                 '}';
     }
