@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <title>admin</title>
-    <link th:href="@{styles/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{styles/style.css}" rel="stylesheet"/>
 </head>
 <body>
 <div>
     <a href="/logout">Выйти</a>
+    <a href="/user">Войти как user</a>
 </div>
 <div>
     <table>
@@ -28,8 +29,22 @@
                 <td th:text="${user.getRoles()}">role</td>
                 <td th:text="${user.isAccountNonLocked() ? '' : 'Заблокирован'}">блок?</td>
                 <td>
-                        <a th:href="@{admin/edit?id={id}(id=${user.getId()})}">Редактировать</a>
-                        <a th:href="@{admin/delete?id={id}(id=${user.getId()})}">Удалить</a>
+                    <a th:href="@{admin/edit?id={id}(id=${user.getId()})}">Редактировать</a>
+
+                    <span th:if="${user.getLocked()}">
+                        <a th:href="@{admin/unlock?id={id}(id=${user.getId()})}">Разблокировать</a>
+                    </span>
+                    <span th:unless="${user.getLocked()}">
+                        <a th:href="@{admin/lock?id={id}(id=${user.getId()})}">Заблокировать</a>
+                    </span>
+
+                    <span th:if="${user.isAdmin()}">
+                        <a th:href="@{admin/set_user?id={id}(id=${user.getId()})}">Сделать юзером</a>
+                    </span>
+                    <span th:unless="${user.isAdmin()}">
+                        <a th:href="@{admin/set_admin?id={id}(id=${user.getId()})}">Сделать админом</a>
+                    </span>
+                    <a th:href="@{admin/delete?id={id}(id=${user.getId()})}">Удалить</a>
                 </td>
             </tr>
         </th:block>

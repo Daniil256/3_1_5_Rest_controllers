@@ -34,14 +34,36 @@ public class AdminController {
         MyUser user = userService.findUserById(id);
         user.setPassword("");
         model.addAttribute("user", user);
-        System.out.println(user);
         return "editor";
     }
 
     @PostMapping("/edit")
     public String update(MyUser user) {
-        System.out.println(user);
         userService.updateUser(user);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/lock")
+    public String lockUser(@RequestParam("id") long id) {
+        userService.lockUser(id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/unlock")
+    public String unlockUser(@RequestParam("id") long id) {
+        userService.unlockUser(id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/set_admin")
+    public String setAdmin(@RequestParam("id") long id) {
+        userService.setAdmin(id);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/set_user")
+    public String setUser(@RequestParam("id") long id) {
+        userService.setUser(id);
         return "redirect:/admin";
     }
 }

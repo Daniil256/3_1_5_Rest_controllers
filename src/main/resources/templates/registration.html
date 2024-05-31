@@ -7,7 +7,6 @@
 </head>
 <body>
 <form method="post" action="#" th:action="@{/registration}" th:object="${userForm}">
-<!--    <input hidden="hidden" th:field="*{id}">-->
     <label>
         <input type="text" placeholder="Имя" th:field="*{username}">
     </label>
@@ -15,7 +14,7 @@
         <input type="password" placeholder="Пароль" th:field="*{password}">
     </label>
     <input type="submit" value="Создать"/>
+    <a href="/">Главная</a>
 </form>
-<a href="/">Главная</a>
 </body>
 </html>

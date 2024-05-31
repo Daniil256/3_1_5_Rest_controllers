@@ -50,7 +50,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public boolean saveUser(MyUser user) {
         user.setId(0L);
-//        user.setLocked(true);
+        user.setLocked(false);
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(config.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
@@ -58,11 +58,41 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public void updateUser(MyUser user) {
-        user.setPassword(config.passwordEncoder().encode(user.getPassword()));
+        if (user.getPassword().isEmpty()) {
+            MyUser myUser = userRepository.findById(user.getId()).get();
+            user.setPassword(myUser.getPassword());
+        } else {
+            user.setPassword(config.passwordEncoder().encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public void lockUser(Long id) {
+        MyUser user = userRepository.findById(id).get();
+        user.setLocked(true);
+        userRepository.save(user);
+    }
+
+    public void unlockUser(Long id) {
+        MyUser user = userRepository.findById(id).get();
+        user.setLocked(false);
+        userRepository.save(user);
+    }
+
+
+    public void setAdmin(Long id) {
+        MyUser user = userRepository.findById(id).get();
+        user.setRoles(Collections.singleton(new Role(2L, "ROLE_ADMIN")));
+        userRepository.save(user);
+    }
+
+    public void setUser(Long id) {
+        MyUser user = userRepository.findById(id).get();
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        userRepository.save(user);
     }
 }

@@ -86,6 +86,10 @@ public class MyUser implements UserDetails {
         return true;
     }
 
+    public boolean isAdmin() {
+        return Objects.equals(getRoles().toString(), "[ROLE_ADMIN]");
+    }
+
     @Override
     public String toString() {
         return "MyUser{" +

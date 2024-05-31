@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="ru">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>User</title>
@@ -20,6 +20,11 @@
 </table>
 <div>
     <a href="/logout">Выйти</a>
+
+    <span th:if="${#authentication.principal.isAdmin()}">
+        <a href="/admin">Войти как admin</a>
+    </span>
+
 </div>
 </body>
 </html>
