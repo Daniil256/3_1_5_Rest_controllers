@@ -19,8 +19,8 @@ public class MyUser implements UserDetails {
     private String password;
     private boolean locked;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Role> roles;
 
     public boolean getLocked() {
         return locked;
@@ -64,11 +64,11 @@ public class MyUser implements UserDetails {
         return true;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
@@ -84,10 +84,6 @@ public class MyUser implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    public boolean isAdmin() {
-        return Objects.equals(getRoles().toString(), "[ROLE_ADMIN]");
     }
 
     @Override

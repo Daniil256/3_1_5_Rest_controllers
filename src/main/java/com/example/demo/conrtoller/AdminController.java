@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -33,7 +35,9 @@ public class AdminController {
     public String edit(@RequestParam("id") long id, Model model) {
         MyUser user = userService.findUserById(id);
         user.setPassword("");
+        user.setRoles(List.of());
         model.addAttribute("user", user);
+        model.addAttribute("roleList", userService.loadAllRoles());
         return "editor";
     }
 
@@ -52,18 +56,6 @@ public class AdminController {
     @GetMapping("/unlock")
     public String unlockUser(@RequestParam("id") long id) {
         userService.unlockUser(id);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/set_admin")
-    public String setAdmin(@RequestParam("id") long id) {
-        userService.setAdmin(id);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/set_user")
-    public String setUser(@RequestParam("id") long id) {
-        userService.setUser(id);
         return "redirect:/admin";
     }
 }

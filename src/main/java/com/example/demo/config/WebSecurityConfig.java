@@ -27,7 +27,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/registration").not().fullyAuthenticated()
                         .requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/user").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers("/", "/styles/**").permitAll()
+                        .requestMatchers("/", "styles/**").permitAll()
                         .anyRequest().authenticated())
 
                 .logout(e -> e.logoutSuccessUrl("/"))

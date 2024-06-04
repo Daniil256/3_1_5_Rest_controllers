@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Editor</title>
@@ -14,10 +14,18 @@
         <span>Имя</span>
         <input type="text" th:field="*{username}">
     </label>
+    <br/>
     <label>
         <span>Пароль</span>
         <input type="password" placeholder="Оставить без изменений" th:field="*{password}">
     </label>
+
+    <label th:each="r : ${roleList}">
+        <br/>
+        <span th:text="${r.getName()}"></span>
+        <input type="checkbox" th:field="*{roles}" th:value="${r.getId()}">
+    </label>
+
     <input type="submit" value="Обновить"/>
 </form>
 </body>

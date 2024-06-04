@@ -37,13 +37,6 @@
                     <span th:unless="${user.getLocked()}">
                         <a th:href="@{admin/lock?id={id}(id=${user.getId()})}">Заблокировать</a>
                     </span>
-
-                    <span th:if="${user.isAdmin()}">
-                        <a th:href="@{admin/set_user?id={id}(id=${user.getId()})}">Сделать юзером</a>
-                    </span>
-                    <span th:unless="${user.isAdmin()}">
-                        <a th:href="@{admin/set_admin?id={id}(id=${user.getId()})}">Сделать админом</a>
-                    </span>
                     <a th:href="@{admin/delete?id={id}(id=${user.getId()})}">Удалить</a>
                 </td>
             </tr>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>reg</title>
-    <link th:href="@{styles/style.css}" rel="stylesheet" />
+    <link th:href="@{styles/style.css}" rel="stylesheet"/>
 </head>
 <body>
 <form method="post" action="#" th:action="@{/registration}" th:object="${userForm}">
@@ -12,6 +12,11 @@
     </label>
     <label>
         <input type="password" placeholder="Пароль" th:field="*{password}">
+    </label>
+    <label>
+        <select th:field="*{roles}">
+            <option th:each="p : ${rolesList}" th:value="${p.getId()}" th:text="${p.getName()}"></option>
+        </select>
     </label>
     <input type="submit" value="Создать"/>
     <a href="/">Главная</a>
