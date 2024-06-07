@@ -5,9 +5,8 @@ import com.example.demo.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -22,6 +21,8 @@ public class AdminController {
     @GetMapping
     public String userList(Model model) {
         model.addAttribute("users", userService.allUsers());
+        model.addAttribute("userForm", new MyUser());
+        model.addAttribute("rolesList", userService.loadAllRoles());
         return "admin";
     }
 
@@ -31,31 +32,23 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit")
-    public String edit(@RequestParam("id") long id, Model model) {
-        MyUser user = userService.findUserById(id);
-        user.setPassword("");
-        user.setRoles(List.of());
-        model.addAttribute("user", user);
-        model.addAttribute("roleList", userService.loadAllRoles());
-        return "editor";
-    }
-
     @PostMapping("/edit")
     public String update(MyUser user) {
         userService.updateUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/lock")
-    public String lockUser(@RequestParam("id") long id) {
-        userService.lockUser(id);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/unlock")
-    public String unlockUser(@RequestParam("id") long id) {
-        userService.unlockUser(id);
+    @PostMapping("/registration")
+    public String addUser(@ModelAttribute("userForm") MyUser userForm, BindingResult bindingResult) {
+        System.out.println(userForm);
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "redirect:/registration";
+        }
+        if (!userService.saveUser(userForm)) {
+            System.out.println("Пользователь с таким именем уже существует");
+            return "redirect:/registration";
+        }
         return "redirect:/admin";
     }
 }

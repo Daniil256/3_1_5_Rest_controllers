@@ -20,18 +20,19 @@ public class UserDetailsServiceImpl implements IUserDetailService {
     private final EntityManager em;
 
     @Autowired
-    public UserDetailsServiceImpl(EntityManager em,UserRepository userRepository, WebSecurityConfig config) {
+    public UserDetailsServiceImpl(EntityManager em, UserRepository userRepository, WebSecurityConfig config) {
         this.userRepository = userRepository;
         this.config = config;
         this.em = em;
     }
+
     public List<Role> loadAllRoles() {
         return em.createQuery("from Role", Role.class).getResultList();
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MyUser user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        MyUser user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("Could not find user");
@@ -56,7 +57,6 @@ public class UserDetailsServiceImpl implements IUserDetailService {
     @Override
     public boolean saveUser(MyUser user) {
         user.setId(0L);
-        user.setLocked(false);
         user.setPassword(config.passwordEncoder().encode(user.getPassword()));
         userRepository.save(user);
         return true;
@@ -80,15 +80,11 @@ public class UserDetailsServiceImpl implements IUserDetailService {
 
     @Override
     public void lockUser(Long id) {
-        MyUser user = userRepository.findById(id).get();
-        user.setLocked(true);
-        userRepository.save(user);
+
     }
 
     @Override
     public void unlockUser(Long id) {
-        MyUser user = userRepository.findById(id).get();
-        user.setLocked(false);
-        userRepository.save(user);
+
     }
 }

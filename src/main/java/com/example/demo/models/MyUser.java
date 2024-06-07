@@ -15,37 +15,58 @@ public class MyUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private int age;
     private String password;
-    private boolean locked;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Role> roles;
 
-    public boolean getLocked() {
-        return locked;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,6 +75,11 @@ public class MyUser implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return firstname;
     }
 
     public void setPassword(String password) {
@@ -66,6 +92,14 @@ public class MyUser implements UserDetails {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public String getRolesName() {
+        if (roles.toString().matches(".*ROLE_ADMIN.*")) {
+            if (roles.toString().matches(".*ROLE_USER.*")) {
+                return "ADMIN USER";
+            } else return "ADMIN";
+        } else return "USER";
     }
 
     public void setRoles(List<Role> roles) {
@@ -90,9 +124,11 @@ public class MyUser implements UserDetails {
     public String toString() {
         return "MyUser{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
                 ", password='" + password + '\'' +
-                ", locked=" + locked +
                 ", roles=" + roles +
                 '}';
     }
