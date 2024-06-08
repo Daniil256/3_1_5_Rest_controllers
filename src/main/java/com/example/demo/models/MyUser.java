@@ -95,11 +95,11 @@ public class MyUser implements UserDetails {
     }
 
     public String getRolesName() {
-        if (roles.toString().matches(".*ROLE_ADMIN.*")) {
-            if (roles.toString().matches(".*ROLE_USER.*")) {
-                return "ADMIN USER";
-            } else return "ADMIN";
-        } else return "USER";
+        return roles.toString()
+                .replace("ROLE_", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", "").trim();
     }
 
     public void setRoles(List<Role> roles) {

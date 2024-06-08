@@ -40,7 +40,6 @@ public class AdminController {
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") MyUser userForm, BindingResult bindingResult) {
-        System.out.println(userForm);
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "redirect:/registration";
