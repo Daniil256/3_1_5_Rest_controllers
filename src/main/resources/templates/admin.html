@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -22,11 +23,11 @@
     </div>
     <div class="main h-100 w-100 d-flex">
         <div class="nav w-20 pt-2 bg-white d-flex flex-column">
-            <div th:if="${#strings.toString(#authentication.principal.getRolesName()).matches('.*ADMIN.*')}">
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="btn btn-primary w-100 text-left" href="/admin" role="button">Admin</a>
             </div>
             <div>
-                <a class="btn w-100 text-primary text-left" href="/user">User</a>
+                <a class="btn text-primary w-100 text-left" href="/user">User</a>
             </div>
         </div>
         <div class="section p-3 w-100">
@@ -67,7 +68,8 @@
                                     <td th:text="*{rolesName}">USER</td>
                                     <td>
                                         <button class="btn btn-info text-white btn-sm" data-toggle="modal"
-                                           th:attr="data-target='#edit_modal' + *{id}">Edit</button>
+                                                th:attr="data-target='#edit_modal' + *{id}">Edit
+                                        </button>
 
                                         <div class="modal fade" th:id="'edit_modal' + *{id}" tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -150,7 +152,8 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-danger text-white btn-sm" data-toggle="modal"
-                                                th:attr="data-target='#delete_modal' + *{id}">Delete</button>
+                                                th:attr="data-target='#delete_modal' + *{id}">Delete
+                                        </button>
 
                                         <div class="modal fade" th:id="'delete_modal' + *{id}" tabindex="-1"
                                              role="dialog"
@@ -236,23 +239,28 @@
                                   class="w-25 mr-auto ml-auto">
                                 <label class="col-form-label-sm m-0">
                                     First name
-                                    <input type="text" placeholder="Firstname" class="form-control form-control-sm" th:field="*{firstname}">
+                                    <input type="text" placeholder="Firstname" class="form-control form-control-sm"
+                                           th:field="*{firstname}">
                                 </label>
                                 <label class="col-form-label-sm m-0">
                                     Last name
-                                    <input type="text" placeholder="Lastname" class="form-control form-control-sm" th:field="*{lastname}">
+                                    <input type="text" placeholder="Lastname" class="form-control form-control-sm"
+                                           th:field="*{lastname}">
                                 </label>
                                 <label class="col-form-label-sm m-0">
                                     Age
-                                    <input type="number" placeholder="Age" class="form-control form-control-sm" th:field="*{age}">
+                                    <input type="number" placeholder="Age" class="form-control form-control-sm"
+                                           th:field="*{age}">
                                 </label>
                                 <label class="col-form-label-sm m-0">
                                     Email
-                                    <input type="email" placeholder="Email" class="form-control form-control-sm" th:field="*{email}">
+                                    <input type="email" placeholder="Email" class="form-control form-control-sm"
+                                           th:field="*{email}">
                                 </label>
                                 <label class="col-form-label-sm m-0">
                                     Password
-                                    <input type="password" placeholder="Password" class="form-control form-control-sm" th:field="*{password}">
+                                    <input type="password" placeholder="Password" class="form-control form-control-sm"
+                                           th:field="*{password}">
                                 </label>
                                 <label class="col-form-label-sm m-0">
                                     Role

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements IUserDetailService {
@@ -26,10 +26,13 @@ public class UserDetailsServiceImpl implements IUserDetailService {
         this.em = em;
     }
 
+    @Transactional
+    @Override
     public List<Role> loadAllRoles() {
         return em.createQuery("from Role", Role.class).getResultList();
     }
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         MyUser user = userRepository.findByEmail(email);
@@ -41,12 +44,7 @@ public class UserDetailsServiceImpl implements IUserDetailService {
         return user;
     }
 
-    @Override
-    public MyUser findUserById(Long userId) {
-        Optional<MyUser> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new MyUser());
-    }
-
+    @Transactional
     @Override
     public List<MyUser> allUsers() {
         List<MyUser> userList = new java.util.ArrayList<>(List.of());
@@ -54,6 +52,7 @@ public class UserDetailsServiceImpl implements IUserDetailService {
         return userList;
     }
 
+    @Transactional
     @Override
     public boolean saveUser(MyUser user) {
         user.setId(0L);
@@ -62,6 +61,7 @@ public class UserDetailsServiceImpl implements IUserDetailService {
         return true;
     }
 
+    @Transactional
     @Override
     public void updateUser(MyUser user) {
         if (user.getPassword().isEmpty()) {
@@ -70,21 +70,16 @@ public class UserDetailsServiceImpl implements IUserDetailService {
         } else {
             user.setPassword(config.passwordEncoder().encode(user.getPassword()));
         }
+        if (user.getRoles() == null) {
+            MyUser myUser = userRepository.findById(user.getId()).get();
+            user.setRoles(myUser.getRoles());
+        }
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
-    }
-
-    @Override
-    public void lockUser(Long id) {
-
-    }
-
-    @Override
-    public void unlockUser(Long id) {
-
     }
 }

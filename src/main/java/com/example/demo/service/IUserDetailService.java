@@ -1,13 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.models.MyUser;
+import com.example.demo.models.Role;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 interface IUserDetailService extends UserDetailsService {
-
-    MyUser findUserById(Long userId);
+    List<Role> loadAllRoles();
 
     List<MyUser> allUsers();
 
@@ -16,9 +16,5 @@ interface IUserDetailService extends UserDetailsService {
     void updateUser(MyUser user);
 
     void deleteUser(Long userId);
-
-    void lockUser(Long id);
-
-    void unlockUser(Long id);
 
 }

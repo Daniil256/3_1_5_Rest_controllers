@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>User</title>
@@ -12,14 +13,7 @@
     <div class="bg-dark d-flex justify-content-between p-2">
         <div class="text-white">
             <b th:text="${#authentication.principal.getEmail()}"></b>
-            <span>with roles:
-            <span th:if="${#strings.toString(#authentication.principal.getRolesName()).matches('.*ADMIN.*')}">
-                ADMIN
-            </span>
-            <span th:if="${#strings.toString(#authentication.principal.getRolesName()).matches('.*USER.*')}">
-                USER
-            </span>
-            </span>
+            <span th:text="'with roles: ' + ${#authentication.principal.getRolesName()}"></span>
         </div>
         <div class="text-light">
             <a class="text-white-50" href="/logout">Logout</a>
@@ -27,8 +21,11 @@
     </div>
     <div class="main h-100 w-100 d-flex">
         <div class="nav w-20 pt-2 bg-white d-flex flex-column">
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="btn text-primary w-100 text-left" href="/admin" role="button">Admin</a>
+            </div>
             <div>
-                <a class="btn w-100 text-left btn-primary" href="/user">User</a>
+                <a class="btn w-100 text-left btn-primary" role="button" href="/user">User</a>
             </div>
         </div>
         <div class="section p-3 w-100">
@@ -74,4 +71,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+</body>
 </html>
