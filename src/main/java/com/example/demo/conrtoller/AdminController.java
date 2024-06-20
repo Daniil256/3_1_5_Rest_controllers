@@ -3,14 +3,18 @@ package com.example.demo.conrtoller;
 import com.example.demo.models.MyUser;
 import com.example.demo.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
+
+
     private final UserDetailsServiceImpl userService;
 
     @Autowired
@@ -19,35 +23,35 @@ public class AdminController {
     }
 
     @GetMapping
-    public String userList(Model model) {
-        model.addAttribute("users", userService.allUsers());
-        model.addAttribute("userForm", new MyUser());
-        model.addAttribute("rolesList", userService.loadAllRoles());
-        return "admin";
+    public ResponseEntity<List<Object>> showAllUsers(Authentication auth) {
+        return ResponseEntity.ok(List.of(userService.allUsers(), auth.getPrincipal()));
     }
 
     @GetMapping("/delete")
-    public String deleteUser(@RequestParam Long id) {
+    public ResponseEntity.BodyBuilder deleteUser(@RequestParam Long id) {
+        System.out.println("DELETE");
         userService.deleteUser(id);
-        return "redirect:/admin";
+        return ResponseEntity.ok();
     }
 
     @PostMapping("/edit")
-    public String update(MyUser user) {
+    public ResponseEntity.BodyBuilder update(MyUser user) {
+        System.out.println("EDIT");
         userService.updateUser(user);
-        return "redirect:/admin";
+        return ResponseEntity.ok();
     }
 
     @PostMapping("/registration")
-    public String addUser(@ModelAttribute("userForm") MyUser userForm, BindingResult bindingResult) {
+    public ResponseEntity.BodyBuilder addUser(MyUser userForm, BindingResult bindingResult) {
+        System.out.println("REG");
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
-            return "redirect:/registration";
+            return ResponseEntity.badRequest();
         }
         if (!userService.saveUser(userForm)) {
             System.out.println("Пользователь с таким именем уже существует");
-            return "redirect:/registration";
+            return ResponseEntity.badRequest();
         }
-        return "redirect:/admin";
+        return ResponseEntity.ok();
     }
 }
