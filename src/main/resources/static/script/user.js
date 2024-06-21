@@ -1,4 +1,4 @@
-import {handleLocation} from "./script.js";
+import {disableRef} from "./script.js";
 
 export async function scriptUser() {
     console.log("user")
@@ -9,6 +9,7 @@ export async function scriptUser() {
     function render(user) {
         document.querySelector("#header_data").innerHTML =
             `<b>${user.email}</b> with roles ${user.rolesName}`
+
         if (user.rolesName.match(".*ADMIN.*")) {
             document.querySelector("#role_bar").innerHTML +=
                 `<div>
@@ -23,12 +24,5 @@ export async function scriptUser() {
 <td>${user.email}</td>
 <td>${user.rolesName}</td>`
     }
-    document.querySelectorAll(".no_ref").forEach(el=>
-        el.addEventListener("click", (event) => {
-            console.log("route")
-            event = event || window.event
-            event.preventDefault()
-            window.history.pushState({}, "", event.target.href)
-            handleLocation()
-        }))
+    disableRef()
 }

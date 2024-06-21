@@ -1,8 +1,8 @@
 
-export function render_users(users){
+export function render_users(data){
 
-    // let el = document.createElement("form")
-    // el.cl
+    document.querySelector("#header_data").innerHTML =
+        `<b>${data[1].email}</b> with roles ${data[1].rolesName}`
 
     document.querySelector("#users_table").innerHTML = (
         `<tr class="head font-weight-bold border-bottom border-top">
@@ -16,7 +16,7 @@ export function render_users(users){
                                 <td>Delete</td>
                             </tr>`
         +
-            users.map(user => `<tr>
+            data[0].map(user => `<tr>
         <td>${user.id}</td>
         <td>${user.firstname}</td>
         <td>${user.lastname}</td>
