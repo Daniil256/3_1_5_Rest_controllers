@@ -2,7 +2,6 @@ import {fetchLogin, page} from "./script.js";
 import {login_form_body} from "./login_form_body.js";
 
 export async function scriptLogout() {
-    console.log("logout")
     window.history.pushState({}, "", "/")
     await fetch("http://localhost:8080/logout")
         .then(() => {
