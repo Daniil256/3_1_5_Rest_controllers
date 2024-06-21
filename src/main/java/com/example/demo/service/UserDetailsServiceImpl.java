@@ -70,7 +70,8 @@ public class UserDetailsServiceImpl implements IUserDetailService {
         } else {
             user.setPassword(config.passwordEncoder().encode(user.getPassword()));
         }
-        if (user.getRoles() == null) {
+        System.out.println(user);
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
             MyUser myUser = userRepository.findById(user.getId()).get();
             user.setRoles(myUser.getRoles());
         }

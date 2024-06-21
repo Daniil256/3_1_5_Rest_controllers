@@ -3,7 +3,8 @@ import {disableRef} from "../script.js";
 
 
 export async function scriptAdmin() {
-await getUsers()
+    await getUsers()
+
     async function getUsers() {
         await fetch("http://localhost:8080/admin")
             .then(res => Promise.resolve(res.json())
@@ -48,7 +49,7 @@ await getUsers()
                 'age': formData.get('age'),
                 'email': formData.get('email'),
                 'password': formData.get('password'),
-                'roles': formData.get('roles')
+                'roles': formData.get('roles') || []
             })
         })
             .then(() => getUsers())
@@ -74,7 +75,7 @@ await getUsers()
                 'roles': ''
             })
         })
-            .then(() =>  getUsers())
+            .then(() => getUsers())
     })
 
     disableRef()
