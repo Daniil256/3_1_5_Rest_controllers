@@ -39,7 +39,7 @@ export default async function scriptAdmin() {
         const formData = new FormData(form_edit)
 
         await fetch("/admin/edit", {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
@@ -56,14 +56,40 @@ export default async function scriptAdmin() {
             .then(async (res) => console.log(res))
             .then(() => scriptAdmin())
     })
-    document.querySelectorAll(".no_ref").forEach(el=>
+
+    const del_form = document.querySelector("#form_del")
+    del_form.addEventListener('submit', async e => {
+        e.preventDefault()
+        console.log("DELETE")
+        const formData = new FormData(del_form)
+
+        await fetch("/admin/delete", {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'id': formData.get('id'),
+                'firstname': '',
+                'lastname': '',
+                'age': '0',
+                'email': '',
+                'password': '',
+                'roles': ''
+            })
+        })
+            .then(async (res) => console.log(res))
+            .then(() => scriptAdmin())
+    })
+
+    document.querySelectorAll(".no_ref").forEach(el =>
         el.addEventListener("click", (event) => {
-        console.log("route")
-        event = event || window.event
-        event.preventDefault()
-        window.history.pushState({}, "", event.target.href)
-        handleLocation()
-    }))
+            console.log("route")
+            event = event || window.event
+            event.preventDefault()
+            window.history.pushState({}, "", event.target.href)
+            handleLocation()
+        }))
 }
 
 

@@ -1,9 +1,10 @@
-import {modal_delete} from "./modal_delete.js";
 
 export function render_users(users){
 
+    // let el = document.createElement("form")
+    // el.cl
 
-    document.querySelector("#users_table").innerHTML =(
+    document.querySelector("#users_table").innerHTML = (
         `<tr class="head font-weight-bold border-bottom border-top">
                                 <td>ID</td>
                                 <td>First Name</td>
@@ -38,9 +39,17 @@ export function render_users(users){
         
         <td>
         <button class="btn btn-danger text-white btn-sm" data-toggle="modal"
-        data-target="#delete_modal${user.id}">Delete
+        data-target="#delete_modal"
+         onclick="
+        document.querySelector('#del_id').value = '${user.id}'
+        document.querySelector('#del_id_disabled').value = '${user.id}'
+        document.querySelector('#del_firstname').value = '${user.firstname}'
+        document.querySelector('#del_lastname').value = '${user.lastname}'
+        document.querySelector('#del_age').value = '${user.age}'
+        document.querySelector('#del_email').value = '${user.email}'
+        "
+        >Delete
         </button>
         </td>
-${modal_delete(user)}        
     </tr>`).join(""))
 }

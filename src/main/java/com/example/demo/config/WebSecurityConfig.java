@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/").not().fullyAuthenticated()
                         .requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/user").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers("/script/*", "/styles/*", "/pages/*").permitAll()
+                        .requestMatchers("/**","/script/*", "/styles/*", "/pages/*").permitAll()
                         .anyRequest().permitAll())
                 .formLogin(e -> e
                         .loginPage("/")
@@ -55,7 +55,7 @@ public class WebSecurityConfig {
                         .passwordParameter("password")
                         .loginProcessingUrl("/perform-login")
                         .defaultSuccessUrl("/")
-                        .failureUrl("/fail2")
+                        .failureUrl("/")
                         .successHandler(successUserHandler))
                 .logout(e -> e.logoutSuccessUrl("/").logoutUrl("/logout"))
                 .csrf(AbstractHttpConfigurer::disable)

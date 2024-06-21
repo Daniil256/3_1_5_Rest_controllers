@@ -2,6 +2,7 @@ package com.example.demo.conrtoller;
 
 import com.example.demo.models.MyUser;
 import com.example.demo.service.UserDetailsServiceImpl;
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -27,14 +28,14 @@ public class AdminController {
         return ResponseEntity.ok(List.of(userService.allUsers(), auth.getPrincipal()));
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity.BodyBuilder deleteUser(@RequestParam Long id) {
+    @PutMapping("/delete")
+    public ResponseEntity.BodyBuilder deleteUser(MyUser user) {
         System.out.println("DELETE");
-        userService.deleteUser(id);
+        userService.deleteUser(user.getId());
         return ResponseEntity.ok();
     }
 
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public ResponseEntity.BodyBuilder update(MyUser user) {
         System.out.println("EDIT");
         userService.updateUser(user);

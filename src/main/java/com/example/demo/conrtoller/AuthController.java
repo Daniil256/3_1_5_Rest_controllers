@@ -10,8 +10,4 @@ public class AuthController {
         System.out.println("login");
         return "login";
     }
-    @GetMapping("/logout")
-    public void logout() {
-        System.out.println("logout");
-    }
 }

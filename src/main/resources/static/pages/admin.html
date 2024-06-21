@@ -99,9 +99,7 @@
             </div>
             <div class="modal-body">
                 <div class="form w-100 bg-white">
-                    <form method="post" action="#"
-                          class="edit_form"
-                          id="form_edit">
+                    <form method="post" action="#" id="form_edit">
                         <input type="hidden"  name="id" id="id">
                         <label class="col-form-label-sm m-0">
                             ID
@@ -152,9 +150,71 @@
                 <button type="button" class="btn btn-secondary"
                         data-dismiss="modal">Close
                 </button>
-                <button type="submit" class="btn btn-primary"
-                        form="form_edit" >Edit
+                <button type="submit" class="btn btn-primary" form="form_edit">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="delete_modal"  tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete user</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div class="modal-body">
+                <div class="form w-100 bg-white">
+                    <form method="post" action="#" id="form_del">
+                        <input type="hidden" id="del_id" name="id">
+                        <label class="col-form-label-sm m-0">
+                            ID
+                            <input disabled type="text" id="del_id_disabled"
+                                   class="form-control form-control-sm" name="id">
+                        </label>
+                        <label class="col-form-label-sm m-0">
+                            First name
+                            <input disabled type="text" id="del_firstname"
+                                   class="form-control form-control-sm" name="firstname">
+                        </label>
+                        <label class="col-form-label-sm m-0">
+                            Last name
+                            <input disabled type="text" id="del_lastname"
+                                   class="form-control form-control-sm" name="lastname">
+                        </label>
+                        <label class="col-form-label-sm m-0">
+                            Age
+                            <input disabled type="number" id="del_age"
+                                   class="form-control form-control-sm" name="age">
+                        </label>
+                        <label class="col-form-label-sm m-0">
+                            Email
+                            <input disabled type="email" id="del_email"
+                                   class="form-control form-control-sm" name="email">
+                        </label>
+                        <label class="col-form-label-sm m-0" >
+                            Role
+                            <select size="2" multiple
+                                    name="roles" disabled
+                                    class="form-control form-control-sm">
+                                <option value="1" aria-checked="true">USER</option>
+                                <option value="2">ADMIN</option>
+                            </select>
+                        </label>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal">Close
+                </button>
+                <button type="submit" form="form_del" class="btn btn-danger">Delete</button>
             </div>
         </div>
     </div>
