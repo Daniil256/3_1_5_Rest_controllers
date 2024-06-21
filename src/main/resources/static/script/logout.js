@@ -5,7 +5,6 @@ export async function scriptLogout() {
     console.log("logout")
     window.history.pushState({}, "", "/")
     await fetch("http://localhost:8080/logout")
-        .then(res => console.log(res))
         .then(() => {
                 const div = document.createElement('div')
                 div.className = 'root'

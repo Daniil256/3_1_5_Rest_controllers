@@ -1,7 +1,6 @@
 import {disableRef} from "./script.js";
 
 export async function scriptUser() {
-    console.log("user")
     await fetch("http://localhost:8080/user")
         .then(res => Promise.resolve(res.json())
             .then(data => render(data)))
@@ -24,5 +23,6 @@ export async function scriptUser() {
 <td>${user.email}</td>
 <td>${user.rolesName}</td>`
     }
+
     disableRef()
 }

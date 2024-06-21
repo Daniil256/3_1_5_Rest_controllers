@@ -28,7 +28,6 @@ await getUsers()
                 'roles': formData.get('roles')
             })
         })
-            .then(async (res) => console.log(res))
             .then(() => getUsers())
     })
 
@@ -52,7 +51,6 @@ await getUsers()
                 'roles': formData.get('roles')
             })
         })
-            .then(async (res) => console.log(res))
             .then(() => getUsers())
     })
 
@@ -76,7 +74,6 @@ await getUsers()
                 'roles': ''
             })
         })
-            .then(async (res) => console.log(res))
             .then(() =>  getUsers())
     })
 
