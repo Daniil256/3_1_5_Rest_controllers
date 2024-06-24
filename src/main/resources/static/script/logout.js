@@ -3,7 +3,7 @@ import {login_form_body} from "./login_form_body.js";
 
 export async function scriptLogout() {
     window.history.pushState({}, "", "/")
-    await fetch("http://localhost:8080/logout")
+    await fetch("/logout")
         .then(() => {
                 const div = document.createElement('div')
                 div.className = 'root'

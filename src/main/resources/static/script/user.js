@@ -1,7 +1,9 @@
 import {disableRef} from "./script.js";
 
+console.log("USER1")
 export async function scriptUser() {
-    await fetch("http://localhost:8080/user")
+    console.log('USER')
+    await fetch("/api/user")
         .then(res => Promise.resolve(res.json())
             .then(data => render(data)))
 

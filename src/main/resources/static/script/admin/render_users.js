@@ -1,5 +1,8 @@
 
 export function render_users(data){
+    document.querySelector("#list-admin").className = 'tab-pane fade w-100 active show'
+    document.querySelector('#list-user').className = 'tab-pane fade'
+
 
     document.querySelector("#header_data").innerHTML =
         `<b>${data[1].email}</b> with roles ${data[1].rolesName}`
@@ -24,8 +27,9 @@ export function render_users(data){
         <td>${user.email}</td>
         <td>${user.rolesName}</td>
         <td>
-        <button class="btn btn-info text-white btn-sm" data-toggle="modal" 
+        <button class="btn btn-info text-white btn-sm" 
         onclick="
+        $('#edit_modal').modal('show');
         document.querySelector('#id').value = '${user.id}'
         document.querySelector('#id_disabled').value = '${user.id}'
         document.querySelector('#firstname').value = '${user.firstname}'
@@ -33,14 +37,14 @@ export function render_users(data){
         document.querySelector('#age').value = '${user.age}'
         document.querySelector('#email').value = '${user.email}'
         "
-        data-target="#edit_modal">Edit
+        >Edit
         </button>
         </td>
         
         <td>
-        <button class="btn btn-danger text-white btn-sm" data-toggle="modal"
-        data-target="#delete_modal"
+        <button class="btn btn-danger text-white btn-sm" 
          onclick="
+        $('#delete_modal').modal('show');
         document.querySelector('#del_id').value = '${user.id}'
         document.querySelector('#del_id_disabled').value = '${user.id}'
         document.querySelector('#del_firstname').value = '${user.firstname}'

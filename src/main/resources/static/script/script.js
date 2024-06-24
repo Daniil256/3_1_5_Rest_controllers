@@ -2,11 +2,9 @@ import {scriptAdmin} from "./admin/admin.js";
 import {scriptUser} from "./user.js";
 import {scriptLogout} from "./logout.js";
 
-export const LOGIN_URL = "http://localhost:8080/perform-login"
-
 export const page = document.querySelector("#main-page")
-
 const loginForm = document.querySelector('.login_form')
+
 export const routes = {
     "http://localhost:8080/user": "/pages/user.html",
     "/user": "/pages/user.html",
@@ -20,8 +18,12 @@ export const scriptPages = {
     "/admin": scriptAdmin,
     "/logout": scriptLogout,
 }
-
-fetchLogin(loginForm)
+if (scriptPages[window.location.pathname]) {
+    scriptPages[window.location.pathname]()
+}
+if (loginForm) {
+    fetchLogin(loginForm)
+}
 
 export function disableRef() {
     document.querySelectorAll(".no_ref").forEach(el =>
@@ -32,7 +34,7 @@ export function disableRef() {
         }))
 }
 
-export const handleLocation = async () => {
+export async function handleLocation() {
     const path = window.location.pathname
     const route = routes[path]
     if (route) {
@@ -49,7 +51,7 @@ export async function fetchLogin(form) {
         e.preventDefault()
         const formData = new FormData(form)
 
-        await fetch(LOGIN_URL, {
+        await fetch("/perform-login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -61,6 +63,7 @@ export async function fetchLogin(form) {
         })
             .then(async (res) => {
                 window.history.pushState({}, "", res.url)
+                console.log(res.url)
                 page.innerHTML = await fetch(routes[res.url]).then((data) => data.text())
                 scriptPages[res.url]()
             })

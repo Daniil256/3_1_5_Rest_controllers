@@ -1,12 +1,11 @@
 import {render_users} from "./render_users.js";
 import {disableRef} from "../script.js";
 
-
 export async function scriptAdmin() {
     await getUsers()
 
     async function getUsers() {
-        await fetch("http://localhost:8080/admin")
+        await fetch("/api/admin")
             .then(res => Promise.resolve(res.json())
                 .then(data => render_users(data)))
     }
@@ -15,7 +14,7 @@ export async function scriptAdmin() {
     reg_form.addEventListener('submit', async e => {
         e.preventDefault()
         const formData = new FormData(reg_form)
-        await fetch("/admin/registration", {
+        await fetch("/api/admin/registration", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -30,6 +29,11 @@ export async function scriptAdmin() {
             })
         })
             .then(() => getUsers())
+        $('#list-admin').tab('show');
+        const users = document.querySelector('#btn-show-users')
+        const reg = document.querySelector('#btn-show-reg')
+        reg.className = 'list-group-item border-0'
+        users.className = 'list-group-item active border-0'
     })
 
     const form_edit = document.querySelector("#form_edit")
@@ -37,7 +41,7 @@ export async function scriptAdmin() {
         e.preventDefault()
         const formData = new FormData(form_edit)
 
-        await fetch("/admin/edit", {
+        await fetch("/api/admin/edit", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -53,6 +57,7 @@ export async function scriptAdmin() {
             })
         })
             .then(() => getUsers())
+                $('#edit_modal').modal('hide');
     })
 
     const del_form = document.querySelector("#form_del")
@@ -60,7 +65,7 @@ export async function scriptAdmin() {
         e.preventDefault()
         const formData = new FormData(del_form)
 
-        await fetch("/admin/delete", {
+        await fetch("/api/admin/delete", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -76,6 +81,7 @@ export async function scriptAdmin() {
             })
         })
             .then(() => getUsers())
+            $('#delete_modal').modal('hide');
     })
 
     disableRef()
