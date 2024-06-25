@@ -25,3 +25,6 @@ tr:nth-child(even) {
 a {
     cursor: pointer;
 }
+#fail_msg{
+    color: red;
+}

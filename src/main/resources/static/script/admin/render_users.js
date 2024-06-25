@@ -1,8 +1,6 @@
-
-export function render_users(data){
+export function render_users(data) {
     document.querySelector("#list-admin").className = 'tab-pane fade w-100 active show'
     document.querySelector('#list-user').className = 'tab-pane fade'
-
 
     document.querySelector("#header_data").innerHTML =
         `<b>${data[1].email}</b> with roles ${data[1].rolesName}`
@@ -19,7 +17,7 @@ export function render_users(data){
                                 <td>Delete</td>
                             </tr>`
         +
-            data[0].map(user => `<tr>
+        data[0].map(user => `<tr>
         <td>${user.id}</td>
         <td>${user.firstname}</td>
         <td>${user.lastname}</td>
@@ -36,6 +34,7 @@ export function render_users(data){
         document.querySelector('#lastname').value = '${user.lastname}'
         document.querySelector('#age').value = '${user.age}'
         document.querySelector('#email').value = '${user.email}'
+        document.querySelector('#roles').value = '${user.roles[0].id}'
         "
         >Edit
         </button>

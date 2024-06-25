@@ -53,11 +53,11 @@ export async function scriptAdmin() {
                 'age': formData.get('age'),
                 'email': formData.get('email'),
                 'password': formData.get('password'),
-                'roles': formData.get('roles') || []
+                'roles': formData.get('roles')
             })
         })
             .then(() => getUsers())
-                $('#edit_modal').modal('hide');
+        $('#edit_modal').modal('hide');
     })
 
     const del_form = document.querySelector("#form_del")
@@ -66,22 +66,16 @@ export async function scriptAdmin() {
         const formData = new FormData(del_form)
 
         await fetch("/api/admin/delete", {
-            method: 'PUT',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams({
                 'id': formData.get('id'),
-                'firstname': '',
-                'lastname': '',
-                'age': '0',
-                'email': '',
-                'password': '',
-                'roles': ''
             })
         })
             .then(() => getUsers())
-            $('#delete_modal').modal('hide');
+        $('#delete_modal').modal('hide');
     })
 
     disableRef()

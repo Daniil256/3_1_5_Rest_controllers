@@ -63,9 +63,12 @@ export async function fetchLogin(form) {
         })
             .then(async (res) => {
                 window.history.pushState({}, "", res.url)
-                console.log(res.url)
-                page.innerHTML = await fetch(routes[res.url]).then((data) => data.text())
-                scriptPages[res.url]()
+                if (res.url === 'http://localhost:8080/fail-login') {
+                    document.querySelector('#fail_msg').innerHTML = 'Неверный логин/пароль'
+                } else {
+                    page.innerHTML = await fetch(routes[res.url]).then((data) => data.text())
+                    scriptPages[res.url]()
+                }
             })
     })
 }

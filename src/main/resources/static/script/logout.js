@@ -18,6 +18,10 @@ export async function scriptLogout() {
                 h4.textContent = 'Please sign in'
                 child_div.appendChild(h4)
 
+                const failLoginDiv = document.createElement('div')
+                failLoginDiv.id = 'fail_msg'
+                child_div.appendChild(failLoginDiv)
+
                 const form = document.createElement("form")
                 form.innerHTML = login_form_body()
 

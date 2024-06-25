@@ -10,4 +10,9 @@ public class AuthController {
         System.out.println("login");
         return "login";
     }
+    @GetMapping("/fail-login")
+    public String loginFail() {
+        System.out.println("fail-login");
+        return "login";
+    }
 }

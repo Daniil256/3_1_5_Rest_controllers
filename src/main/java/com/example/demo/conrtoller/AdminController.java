@@ -4,9 +4,11 @@ import com.example.demo.models.MyUser;
 import com.example.demo.service.UserDetailsServiceImpl;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,19 +30,21 @@ public class AdminController {
         return ResponseEntity.ok(List.of(userService.allUsers(), auth.getPrincipal()));
     }
 
-    @PutMapping("/delete")
-    public ResponseEntity.BodyBuilder deleteUser(MyUser user) {
+    @DeleteMapping("/delete")
+    public ResponseEntity.BodyBuilder deleteUser(Long id) {
         System.out.println("DELETE");
-        userService.deleteUser(user.getId());
+        userService.deleteUser(id);
         return ResponseEntity.ok();
     }
 
     @PutMapping("/edit")
     public ResponseEntity.BodyBuilder update(MyUser user) {
         System.out.println("EDIT");
+        System.out.println(user);
         userService.updateUser(user);
         return ResponseEntity.ok();
     }
+
 
     @PostMapping("/registration")
     public ResponseEntity.BodyBuilder addUser(MyUser userForm, BindingResult bindingResult) {
@@ -54,5 +58,11 @@ public class AdminController {
             return ResponseEntity.badRequest();
         }
         return ResponseEntity.ok();
+    }
+
+    @ResponseBody
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+    public String handleHttpMediaTypeNotAcceptableException() {
+        return "acceptable MIME type:" + MediaType.APPLICATION_JSON_VALUE;
     }
 }
